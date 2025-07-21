@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>موقع دردشة بسيط</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="container">
+        <aside class="friends-list">
+            <h2>الأصدقاء</h2>
+            <ul id="friends">
+                <li class="friend active" data-name="أحمد">أحمد</li>
+                <li class="friend" data-name="سارة">سارة</li>
+                <li class="friend" data-name="محمد">محمد</li>
+                <li class="friend" data-name="ليلى">ليلى</li>
+            </ul>
+        </aside>
+        <main class="chat-area">
+            <header id="chat-header">الدردشة مع أحمد</header>
+            <div id="messages"></div>
+            <form id="message-form">
+                <input type="text" id="message-input" placeholder="اكتب رسالة..." autocomplete="off" required />
+                <button type="submit">إرسال</button>
+            </form>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

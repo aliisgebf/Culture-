@@ -1,0 +1,62 @@
+const friendsList = document.getElementById('friends');
+const chatHeader = document.getElementById('chat-header');
+const messagesDiv = document.getElementById('messages');
+const messageForm = document.getElementById('message-form');
+const messageInput = document.getElementById('message-input');
+
+let currentFriend = 'أحمد';
+
+// هيكل لتخزين الرسائل لكل صديق (محلي فقط)
+const chatData = {
+    'أحمد': [],
+    'سارة': [],
+    'محمد': [],
+    'ليلى': []
+};
+
+// تحديث عرض الرسائل بناءً على الصديق الحالي
+function renderMessages() {
+    messagesDiv.innerHTML = '';
+    const msgs = chatData[currentFriend];
+    msgs.forEach(msg => {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message');
+        msgDiv.classList.add(msg.sent ? 'sent' : 'received');
+        msgDiv.textContent = msg.text;
+        messagesDiv.appendChild(msgDiv);
+    });
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// تحديد الصديق عند الضغط
+friendsList.addEventListener('click', e => {
+    const target = e.target;
+    if (target.classList.contains('friend') && !target.classList.contains('active')) {
+        document.querySelectorAll('.friend').forEach(f => f.classList.remove('active'));
+        target.classList.add('active');
+        currentFriend = target.dataset.name;
+        chatHeader.textContent = 'الدردشة مع ' + currentFriend;
+        renderMessages();
+    }
+});
+
+// إرسال رسالة
+messageForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const text = messageInput.value.trim();
+    if (!text) return;
+
+    // أضف الرسالة إلى الدردشة كمرسلة (sent)
+    chatData[currentFriend].push({ text, sent: true });
+    renderMessages();
+    messageInput.value = '';
+
+    // رد تلقائي بسيط مع تأخير (simulate received)
+    setTimeout(() => {
+        chatData[currentFriend].push({ text: 'تم استلام: ' + text, sent: false });
+        renderMessages();
+    }, 1000);
+});
+
+// تحميل الدردشة بالصديق الافتراضي
+renderMessages();
